@@ -28,4 +28,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'windwp/nvim-autopairs'
 
+-- git
+Plug 'lewis6991/gitsigns.nvim'
+
 vim.call('plug#end')

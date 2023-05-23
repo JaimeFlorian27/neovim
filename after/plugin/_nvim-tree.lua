@@ -11,4 +11,4 @@ require("nvim-tree").setup()
 -- key remaps
 local map = vim.api.nvim_set_keymap
 options = { noremap = true }
-map( 'n', '<C-n>', ':NvimTreeToggle<cr>', options)
+map( 'n', "<leader>e", ':NvimTreeToggle<cr>', options)
