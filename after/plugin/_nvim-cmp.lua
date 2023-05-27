@@ -1,6 +1,7 @@
 -- Set up nvim-cmp.
 local cmp = require'cmp'
-
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
   cmp.setup({
     snippet = {
       -- REQUIRED - you must specify a snippet engine
