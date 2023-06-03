@@ -18,6 +18,7 @@ Plug('nvim-telescope/telescope.nvim', { tag = '0.1.1' })
 
 -- theme
 Plug 'ellisonleao/gruvbox.nvim'
+Plug 'projekt0n/github-nvim-theme'
 
 -- autocomplete
 Plug 'neovim/nvim-lspconfig'
@@ -27,6 +28,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'windwp/nvim-autopairs'
+
+-- navigation
+Plug 'christoomey/vim-tmux-navigator'
 
 -- git
 Plug 'lewis6991/gitsigns.nvim'
