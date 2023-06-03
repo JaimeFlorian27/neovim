@@ -1,5 +1,14 @@
 -- vim options
 vim.opt.number = true
+vim.opt.autochdir = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+
+-- assigning filetypes
+vim.cmd([[autocmd! BufRead,BufNewFile *.usd set filetype=usd]])
+vim.cmd([[autocmd! BufRead,BufNewFile *.usda set filetype=usda]])
 
 -- key remaps
 local map = vim.api.nvim_set_keymap
