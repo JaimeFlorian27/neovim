@@ -29,6 +29,8 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'windwp/nvim-autopairs'
 
+-- aerial (outliner)
+Plug 'stevearc/aerial.nvim'
 -- navigation
 Plug 'christoomey/vim-tmux-navigator'
 
