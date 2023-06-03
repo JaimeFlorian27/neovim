@@ -37,4 +37,7 @@ Plug 'christoomey/vim-tmux-navigator'
 -- git
 Plug 'lewis6991/gitsigns.nvim'
 
+-- python
+Plug 'Vimjas/vim-python-pep8-indent'
+
 vim.call('plug#end')
