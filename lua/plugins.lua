@@ -13,6 +13,7 @@ Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
+-- telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug('nvim-telescope/telescope.nvim', { tag = '0.1.1' })
 
@@ -36,6 +37,9 @@ Plug 'christoomey/vim-tmux-navigator'
 
 -- git
 Plug 'lewis6991/gitsigns.nvim'
+
+-- indentation
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 -- python
 Plug 'Vimjas/vim-python-pep8-indent'
