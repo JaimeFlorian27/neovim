@@ -8,7 +8,7 @@ vim.opt.expandtab = true
 
 -- assigning filetypes
 vim.cmd([[autocmd! BufRead,BufNewFile *.usd set filetype=usd]])
-vim.cmd([[autocmd! BufRead,BufNewFile *.usda set filetype=usda]])
+vim.cmd([[autocmd! BufRead,BufNewFile *.usda set filetype=usd]])
 
 -- key remaps
 local map = vim.api.nvim_set_keymap
