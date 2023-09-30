@@ -43,5 +43,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 -- python
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'danymat/neogen'
 
 vim.call('plug#end')
