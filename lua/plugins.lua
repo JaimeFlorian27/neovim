@@ -1,53 +1,49 @@
-local Plug = vim.fn['plug#']
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-vim.call('plug#begin') 
-
+require("lazy").setup({
 -- nvim tree
-Plug 'nvim-tree/nvim-web-devicons' 
-Plug 'nvim-tree/nvim-tree.lua'
-
--- treesitter
-Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
-
--- lualine
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-tree/nvim-web-devicons'
-
--- telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug('nvim-telescope/telescope.nvim', { tag = '0.1.1' })
-
--- theme
-Plug 'ellisonleao/gruvbox.nvim'
-Plug 'projekt0n/github-nvim-theme'
-
--- autocomplete
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'windwp/nvim-autopairs'
-
--- snippets
-Plug('L3MON4D3/LuaSnip', {tag = 'v2.*', ['do'] = 'make install_jsregexp'})
-
-Plug 'ray-x/lsp_signature.nvim'
-
--- aerial (outliner)
-Plug 'stevearc/aerial.nvim'
--- navigation
-Plug 'christoomey/vim-tmux-navigator'
-
--- git
-Plug 'lewis6991/gitsigns.nvim'
-
--- indentation
-Plug 'lukas-reineke/indent-blankline.nvim'
-
--- python
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'danymat/neogen'
-
-vim.call('plug#end')
+'nvim-tree/nvim-web-devicons',
+'nvim-tree/nvim-tree.lua',
+'nvim-lualine/lualine.nvim',
+'nvim-lua/plenary.nvim',
+'ellisonleao/gruvbox.nvim',
+'projekt0n/github-nvim-theme',
+'neovim/nvim-lspconfig',
+'hrsh7th/cmp-nvim-lsp',
+'hrsh7th/cmp-buffer',
+'hrsh7th/cmp-path',
+'hrsh7th/cmp-cmdline',
+'hrsh7th/nvim-cmp',
+'windwp/nvim-autopairs',
+'ray-x/lsp_signature.nvim',
+'stevearc/aerial.nvim',
+'christoomey/vim-tmux-navigator',
+'ggandor/leap.nvim',
+'lewis6991/gitsigns.nvim',
+{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+'Vimjas/vim-python-pep8-indent',
+'danymat/neogen',
+{
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+},
+{ "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+    require("nvim-treesitter.configs").setup {
+        ensure_installed = { "c", "lua", "rust" },
+        highlight = { enable = true, }
+    }
+end },
+})
