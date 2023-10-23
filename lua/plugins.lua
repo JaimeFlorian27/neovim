@@ -46,4 +46,9 @@ require("lazy").setup({
         highlight = { enable = true, }
     }
 end },
+{
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  after = "nvim-treesitter",
+  requires = "nvim-treesitter/nvim-treesitter",
+}
 })
