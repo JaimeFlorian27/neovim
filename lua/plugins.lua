@@ -33,6 +33,7 @@ require("lazy").setup({
 'lewis6991/gitsigns.nvim',
 'Vimjas/vim-python-pep8-indent',
 'danymat/neogen',
+{ 'rose-pine/neovim', name = 'rose-pine' },
 {
     'nvim-telescope/telescope.nvim', tag = '0.1.4',
     dependencies = { 'nvim-lua/plenary.nvim' }

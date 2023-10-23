@@ -31,5 +31,5 @@ require("plugins")
 
 -- theme
 vim.o.background = "dark"
-vim.cmd [[colorscheme github_dark_colorblind]]
+vim.cmd [[colorscheme rose-pine]]
 
