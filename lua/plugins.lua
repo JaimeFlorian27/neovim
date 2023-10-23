@@ -31,7 +31,6 @@ require("lazy").setup({
 'christoomey/vim-tmux-navigator',
 'ggandor/leap.nvim',
 'lewis6991/gitsigns.nvim',
-{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 'Vimjas/vim-python-pep8-indent',
 'danymat/neogen',
 {
