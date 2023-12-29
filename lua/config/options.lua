@@ -22,7 +22,6 @@ opt.termguicolors = true
 opt.colorcolumn = '88'
 opt.signcolumn = "yes"
 opt.scrolloff = 10
-opt.completeopt = "menuone,noinsert,noselect"
 
 -- Behaviour
 opt.hidden = true

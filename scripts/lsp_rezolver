@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+from argparse import ArgumentParser
+import sys
+import os
+import subprocess
+import signal
+import shlex
+
+def setup_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("rez_package")
+    parser.add_argument("lsp")
+    return parser
+
+try:
+    from rez.resolved_context import ResolvedContext
+except:
+    print("No rez found in this context")
+    try:
+        parser = setup_parser()
+        args = parser.parse_args()
+        subprocess.run(args.lsp, shell=True)
+    except:
+        sys.exit()
+
+
+def has_package(context: ResolvedContext, package: str) -> bool:
+    if context.get_resolved_package(package):
+        return True
+    return False
+
+def main() -> int:
+    parser = setup_parser()
+    args = parser.parse_args()
+
+    # if we have rez then check if currently in a context
+    current_context = ResolvedContext.get_current()
+
+    # if not in a rez context or current one does not have the package we need
+    if not current_context or not has_package(current_context, args.rez_package):
+        # create a new context with the package
+        current_context = ResolvedContext([args.rez_package])
+
+    # finally execute the lsp in a rez shell
+    try:
+        a = current_context.execute_shell(command=shlex.split(args.lsp),
+                                          )
+        a.communicate()
+    except KeyboardInterrupt:
+        a.send_signal(signal.SIGINT)
+    finally:
+        print(a.stdout)
+        return a.returncode
+
+if __name__=="__main__":
+    sys.exit(main())
