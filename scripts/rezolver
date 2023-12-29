@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+import shlex
+import signal
+import subprocess
+import sys
+from argparse import ArgumentParser
+from typing import List
+
+# Ugly but also elegant. Works for what I need. I may revisit it, famous last words.
+rez_available = True
+try:
+    from rez.resolved_context import ResolvedContext
+except ImportError:
+    rez_available = False
+
+
+def has_package(context: ResolvedContext, package: str) -> bool:
+    if context.get_resolved_package(package):
+        return True
+
+    return False
+
+
+def get_context_with_package(package: str) -> ResolvedContext:
+    # if we have rez then check if currently in a context
+    current_context = ResolvedContext.get_current()
+
+    # if not in a rez context or current one does not have the package we need
+    if not current_context or not has_package(current_context, package):
+        # create a new context with the package
+        current_context = ResolvedContext([package])
+
+    return current_context
+
+
+def execute_rez_shell(context: ResolvedContext, binary: List[str]) -> int:
+    try:
+        shell = context.execute_shell(
+            command=binary,
+        )
+        shell.communicate()
+    except KeyboardInterrupt:
+        shell.send_signal(signal.SIGINT)
+    return shell.returncode
+
+
+def rezolve(package: str, binary: List[str]) -> int:
+    if not rez_available:
+        return subprocess.run(binary).returncode
+
+    context = get_context_with_package(package)
+
+    return execute_rez_shell(context, binary)
+
+
+if __name__ == "__main__":
+    sys.exit(rezolve(sys.argv[1], sys.argv[2:]))
