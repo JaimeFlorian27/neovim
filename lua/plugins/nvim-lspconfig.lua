@@ -3,6 +3,10 @@ function rezolve(package, executable)
     return {rezolver, package, executable}
 end
 
+function config_file(file)
+    return vim.fn.stdpath('config') .. "/config/" .. file
+end
+
 function as_str(str_table)
     local result_str = table.concat(str_table, " ")
         return result_str
@@ -39,7 +43,9 @@ function config_lsp ()
         on_attach = on_attach,
         init_options = {
         settings = {
-            args = {"--select=ALL", "--ignore=ANN101,S603"},
+            args = {"--select=ALL", 
+                    "--ignore=ANN101,S603", 
+                    "--config=" .. config_file("ruff.toml")},
         }
     }
     }
