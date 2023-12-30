@@ -17,6 +17,7 @@ return{
     lazy = false,
     config = function()
         local cmp = require("cmp")
+        local luasnip = require("luasnip")
 
         vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
@@ -34,25 +35,29 @@ return{
                   ['<C-Space>'] = cmp.mapping.complete(),
                   ['<C-e>'] = cmp.mapping.abort(),
                   ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                  ['<Tab>'] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                          if #cmp.get_entries() == 1 then
-                            cmp.confirm({ select = true })
-                          else
-                            cmp.select_next_item()
-                          end
-                        --[[ Replace with your snippet engine (see above sections on this page)
-                        elseif snippy.can_expand_or_advance() then
-                          snippy.expand_or_advance() ]]
-                        elseif has_words_before() then
-                          cmp.complete()
-                          if #cmp.get_entries() == 1 then
-                            cmp.confirm({ select = true })
-                          end
-                        else
-                          fallback()
-                        end
-                      end, { "i", "s" }),
+                  ["<Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                      cmp.select_next_item()
+                    -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable() 
+                    -- that way you will only jump inside the snippet region
+                    elseif luasnip.expand_or_jumpable() then
+                      luasnip.expand_or_jump()
+                    elseif has_words_before() then
+                      cmp.complete()
+                    else
+                      fallback()
+                    end
+                  end, { "i", "s" }),
+
+                  ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                      cmp.select_prev_item()
+                    elseif luasnip.jumpable(-1) then
+                      luasnip.jump(-1)
+                    else
+                      fallback()
+                    end
+                  end, { "i", "s" }),
               }),
               sources = cmp.config.sources(
                   {
