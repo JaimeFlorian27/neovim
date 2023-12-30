@@ -10,10 +10,10 @@ I'm not sure if there are any advantages to it but it was fun using the Rez api 
 """
 from __future__ import annotations
 
+
 import signal
 import subprocess
 import sys
-from argparse import ArgumentParser
 
 # Ugly but also elegant. Works for what I need. I may revisit it, famous last words.
 rez_available = True
@@ -21,19 +21,6 @@ try:
     from rez.resolved_context import ResolvedContext
 except ImportError:
     rez_available = False
-
-
-def setup_parser() -> ArgumentParser:
-    """Setups the parser of the script.
-
-    Returns:
-        The parser
-    """
-    parser = ArgumentParser()
-
-    parser.add_argument("package")
-    parser.add_argument("binary", nargs="*")
-    return parser
 
 
 def has_package(context: ResolvedContext, package: str) -> bool:
@@ -118,6 +105,4 @@ def rezolve(package: str, binary: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    parser = setup_parser()
-    args = parser.parse_args()
-    sys.exit(rezolve(args.package, args.binary))
+    sys.exit(rezolve(sys.argv[1], sys.argv[2:]))

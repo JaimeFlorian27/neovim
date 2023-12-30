@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Execute a binary inside of a rez context that has the package that contains it.
+
+The script does not use an ArgumentParser, instead it takes the sys.argv list to
+extract the name of the package and the command that the binary will take.
+
+Why didn't I do a simple `rez env -- <commands>`. because I was bored, and also because
+I wanted to make sure that it could be done with the context the user was current in,
+I'm not sure if there are any advantages to it but it was fun using the Rez api :).
+"""
+from __future__ import annotations
+
+import signal
+import subprocess
+import sys
+import shutil
+
+def rez_available() -> bool:
+    if shutil.which("rez"):
+        return True
+    return False
+
+
+def rezolve(package: str, binary: list[str]) -> int:
+    """Thin wrapper to executes a command in a rez shell.
+
+    Args:
+        package: rez package that contains the binary to be executed.
+        binary: List of str, which are the command to execute and its arguments.
+
+    Returns:
+        The return code of the executed command.
+    """
+    if not rez_available():
+        return subprocess.run(binary, check=False).returncode
+
+    command = ["rez-env", package, "--"]
+    command.extend(binary)
+
+    return subprocess.run(command).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(rezolve(sys.argv[1], sys.argv[2:]))

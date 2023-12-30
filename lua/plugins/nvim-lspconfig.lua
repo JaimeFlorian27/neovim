@@ -1,6 +1,6 @@
-function rezolve(package, executable)
+function rezolve(rez_package, executable)
     rezolver = vim.fn.stdpath('config') .. "/scripts/rezolver"
-    return {rezolver, package, executable}
+    return {rezolver, rez_package, executable}
 end
 
 function config_file(file)
