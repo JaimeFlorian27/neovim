@@ -10,7 +10,6 @@ I'm not sure if there are any advantages to it but it was fun using the Rez api 
 """
 from __future__ import annotations
 
-
 import signal
 import subprocess
 import sys
