@@ -6,6 +6,13 @@ end
 
 return{
 	"hrsh7th/nvim-cmp",
+      dependencies = {
+      "hrsh7th/cmp-emoji",
+      {
+        "zbirenbaum/copilot-cmp",
+        opts = {},
+      },
+    },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer", -- source for text in buffer
@@ -13,6 +20,11 @@ return{
         "hrsh7th/cmp-cmdline",
         'L3MON4D3/LuaSnip',
         'saadparwaiz1/cmp_luasnip',
+        "hrsh7th/cmp-emoji",
+        {
+          "zbirenbaum/copilot-cmp",
+          opts = {},
+        },
 	},
     lazy = false,
     config = function()
@@ -60,7 +72,8 @@ return{
                   end, { "i", "s" }),
               }),
               sources = cmp.config.sources(
-                  {
+                  { 
+                      { name = "copilot", group_index = 2 },
                       { name = 'nvim_lsp' },
                       { name = 'luasnip' }
                   }, 

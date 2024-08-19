@@ -2,9 +2,9 @@ local opt = vim.opt
 
 
 -- Indentation
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.softtabstop = 4
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.softtabstop = 2
 opt.expandtab = true
 opt.smartindent = true
 opt.wrap = false
@@ -32,3 +32,9 @@ opt.autochdir = false
 opt.iskeyword:append("_")
 opt.iskeyword:append("-")
 opt.mouse:append('a')
+
+-- filetype assignments
+vim.cmd([[autocmd! BufRead,BufNewFile *.usd set filetype=usd]])
+vim.cmd([[autocmd! BufRead,BufNewFile *.usda set filetype=usd]])
+
+vim.cmd([[autocmd! BufRead,BufNewFile *.qml set filetype=qmljs]])

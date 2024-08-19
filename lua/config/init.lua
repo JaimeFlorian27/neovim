@@ -23,7 +23,13 @@ local opts = {
     lazy = true, -- should plugins be lazy-loaded?
   },
   install = {
-    colorscheme = { "rose-pine" },
+    colorscheme = { "tokyonight" },
+  },
+
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = false,
+    notify = false, -- get a notification when changes are found
   },
   performance = {
     rtp = {

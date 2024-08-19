@@ -7,7 +7,7 @@ return {
         end,
     init = function()
 		local opts = { noremap = true, silent = true }
-		vim.api.nvim_set_keymap("n", "<leader>nf", 
+		vim.api.nvim_set_keymap("n", "<leader>af", 
         ":lua require('neogen').generate()<CR>", opts)
     end
     -- Uncomment next line if you want to follow only stable versions

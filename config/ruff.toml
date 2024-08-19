@@ -1,3 +1,0 @@
-[lint.pydocstyle]
-convention = "google"  # Accepts: "google", "numpy", or "pep257".
-

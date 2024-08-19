@@ -20,37 +20,44 @@ function config_lsp ()
 
     local on_attach = function(client, bufnr)
       -- Disable hover in favor of pylsp
-      client.server_capabilities.hoverProvider = false
+      client.server_apabilities.hoverProvider = false
     end
-    -- lsp servers setup
-    lspconfig.pylsp.setup {
-        cmd = rezolve("python_dev_utils", "pylsp"),
+    lspconfig.pyright.setup {
+        -- cmd = rezolve("python_dev_utils", "pyright"),
         capabilities = capabilities,
-        configurationSources = {},
-            plugins = {
-            -- formatter options
-            yapf = { enabled = false },
-            black = { enabled = false },
-            -- linter options
-            -- type checker
-            pylsp_mypy = { enabled = true },
-            -- auto-completion options
-            jedi_completion = { fuzzy = true },
-        },
     }
-    lspconfig.ruff_lsp.setup {
-        cmd = rezolve("python_dev_utils", "ruff-lsp"),
-        on_attach = on_attach,
-        init_options = {
+    local on_attach = function(client, bufnr)
+      if client.name == 'ruff' then
+        -- Disable hover in favor of Pyright
+        client.server_capabilities.hoverProvider = false
+      end
+    end
+
+    require('lspconfig').ruff.setup {
+    cmd = {"ruff", "server", "--preview"},
+      on_attach = on_attach,
         settings = {
-            args = {"--select=ALL", 
-                    "--ignore=ANN101,S603", 
-                    "--config=" .. config_file("ruff.toml")},
+            config = {config_file("pyproject.toml")},
         }
     }
+    require'lspconfig'.slint_lsp.setup{}
+    -- lspconfig.ruff_lsp.setup {
+    --     cmd = rezolve("python_dev_utils", "ruffp"),
+    --     on_attach = on_attach,
+    --     init_options = {
+    --     settings = {
+    --         args = {"--config=" .. config_file("pyproject.toml")},
+    --     }
+    -- }
+    --
+    -- }
+    lspconfig.clangd.setup {
+        -- cmd = rezolve("python_dev_utils", "pyright"),
+        capabilities = capabilities,
     }
+    lspconfig.qmlls.setup{ capabilities = capabilities,
+  }
 
-    lspconfig.tsserver.setup {}
     lspconfig.rust_analyzer.setup {
       -- Server-specific settings. See `:help lspconfig-setup`
       settings = {
@@ -94,17 +101,17 @@ function config_lsp ()
         end
         , opts)
 
-        -- auto format on write
-        vim.api.nvim_create_autocmd(
-            'BufWritePre', 
-            {
-                callback = function()
-                  if vim.lsp.get_active_clients({bufnr = 0})[1] then
-                    vim.lsp.buf.format { async = true }
-                  end
-                end
-            }
-        )
+        -- -- auto format on write
+        -- vim.api.nvim_create_autocmd(
+        --     'BufWritePre', 
+        --     {
+        --         callback = function()
+        --           if vim.lsp.get_active_clients({bufnr = 0})[1] and vim.o.filetype == "python" then
+        --             vim.lsp.buf.format { async = true }
+        --           end
+        --         end
+        --     }
+        -- )
       end,
     })
 end
